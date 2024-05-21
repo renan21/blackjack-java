@@ -10,24 +10,28 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
 public class Scenario extends JPanel implements ActionListener {
 	
 	private Image background;
 	private MainMenu mainMenu;
+	private Timer timer;
 	
 	public Scenario() {
 		setFocusable(true);
 		setDoubleBuffered(true);
 		
-		
-		ImageIcon imageIcon = new ImageIcon("resources\\background.png");
+		ImageIcon imageIcon = new ImageIcon("src\\main\\resources\\images\\background.png");
 		this.background = imageIcon.getImage();
 		
 		mainMenu = new MainMenu();
 		mainMenu.load();
 		
 		addKeyListener(new KeyboardAdapter());
+		
+		this.timer = new Timer(5, this);
+		this.timer.start();
 
 	}
 	
@@ -35,7 +39,11 @@ public class Scenario extends JPanel implements ActionListener {
 	public void paint(Graphics graphics) {
 		Graphics2D graphics2d = (Graphics2D) graphics;
 		graphics2d.drawImage(background, 0, 0, null);
-		graphics2d.drawImage(mainMenu.getPlayImage(), 465, 500, this);
+		graphics2d.drawImage(mainMenu.getLogo(), 300, 80, this);
+		graphics2d.drawImage(mainMenu.getPlay(), 450, 540, this);		
+		graphics2d.drawImage(mainMenu.getRules(), 442, 570, this);
+		graphics2d.drawImage(mainMenu.getExit(), 452, 600, this);
+		graphics2d.drawImage(mainMenu.getArrow(), 400, mainMenu.getArrowY(), this);
 		graphics.dispose();
 	}
 

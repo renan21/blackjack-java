@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.Map.Entry;
 
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
@@ -26,7 +27,7 @@ public class Scenario extends JPanel implements ActionListener {
 		this.background = imageIcon.getImage();
 		
 		mainMenu = new MainMenu();
-		mainMenu.load();
+		mainMenu.loadSceneItens();
 		
 		addKeyListener(new KeyboardAdapter());
 		
@@ -38,12 +39,10 @@ public class Scenario extends JPanel implements ActionListener {
 	@Override
 	public void paint(Graphics graphics) {
 		Graphics2D graphics2d = (Graphics2D) graphics;
-		graphics2d.drawImage(background, 0, 0, null);
-		graphics2d.drawImage(mainMenu.getLogo(), 300, 80, this);
-		graphics2d.drawImage(mainMenu.getPlay(), 450, 540, this);		
-		graphics2d.drawImage(mainMenu.getRules(), 442, 570, this);
-		graphics2d.drawImage(mainMenu.getExit(), 452, 600, this);
-		graphics2d.drawImage(mainMenu.getArrow(), 400, mainMenu.getArrowY(), this);
+		graphics2d.drawImage(background, 0, 0, this);
+		for(Entry<String, SceneItem> sceneIten : mainMenu.getSceneItens().entrySet()) {
+			graphics2d.drawImage(sceneIten.getValue().getImage(), sceneIten.getValue().getDefaultXPostion(), sceneIten.getValue().getDefaultYPostion(), this);
+		}		
 		graphics.dispose();
 	}
 

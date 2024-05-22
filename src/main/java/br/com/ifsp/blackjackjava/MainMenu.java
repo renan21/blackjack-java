@@ -1,82 +1,57 @@
 package br.com.ifsp.blackjackjava;
 
-import java.awt.Image;
 import java.awt.event.KeyEvent;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import javax.swing.ImageIcon;
+public class MainMenu implements Scene {	
 
-public class MainMenu {
+	private Map<String, SceneItem> sceneItens;
 	
-	private Image logo;
-	private Image play;
-	private Image rules;
-	private Image exit;
-	private Image arrow;
-	private int arrowY;
-
-	
-	public void load() {
-		ImageIcon logo = new ImageIcon("src\\main\\resources\\images\\logo.png");
-		ImageIcon play = new ImageIcon("src\\main\\resources\\images\\play.png");
-		ImageIcon rules = new ImageIcon("src\\main\\resources\\images\\rules.png");
-		ImageIcon exit = new ImageIcon("src\\main\\resources\\images\\exit.png");
-		ImageIcon arrow = new ImageIcon("src\\main\\resources\\images\\arrow.png");
+	public void loadSceneItens() {
+		sceneItens = new HashMap<String, SceneItem>();
+		sceneItens.put("logo", new SceneItem(300, 80, "src\\main\\resources\\images\\logo.png"));
+		sceneItens.put("play", new SceneItem(450, 540, "src\\main\\resources\\images\\play.png"));
+		sceneItens.put("rules", new SceneItem(442, 570, "src\\main\\resources\\images\\rules.png"));
+		sceneItens.put("exit", new SceneItem(452, 600, "src\\main\\resources\\images\\exit.png"));
+		sceneItens.put("arrow", new SceneItem(400, 540, "src\\main\\resources\\images\\arrow.png"));
 		
-		this.logo = logo.getImage();
-		this.play = play.getImage();
-		this.rules = rules.getImage();
-		this.exit = exit.getImage();
-		this.arrow = arrow.getImage();
-		this.arrowY = 540;
 	}
 	
 	public void keyPressed(KeyEvent keyEvent) {
 		int keyCode = keyEvent.getKeyCode();
+		SceneItem arrow = sceneItens.get("arrow");
+		
+		System.out.println(arrow.getDefaultYPostion());
+		
 				
 		if(keyCode == KeyEvent.VK_UP) {
-			if(this.arrowY == 540) {
-				this.arrowY = 600;
-			} else if(this.arrowY == 570) {
-				this.arrowY = 540;
-			} else if(this.arrowY == 600) {
-				this.arrowY = 570;
+			if(arrow.getDefaultYPostion() == 540) {
+				arrow.updateYPostition(600);
+			} else if(arrow.getDefaultYPostion() == 570) {
+				arrow.updateYPostition(540);
+			} else if(arrow.getDefaultYPostion() == 600) {
+				arrow.updateYPostition(570);
 			}
 		}
 		
 		if(keyCode == KeyEvent.VK_DOWN) {
-			if(this.arrowY == 540) {
-				this.arrowY = 570;
-			} else if(this.arrowY == 570) {
-				this.arrowY = 600;
-			} else if(this.arrowY == 600) {
-				this.arrowY = 540;
+			if(arrow.getDefaultYPostion() == 540) {
+				arrow.updateYPostition(570);
+			} else if(arrow.getDefaultYPostion() == 570) {
+				arrow.updateYPostition(600);
+			} else if(arrow.getDefaultYPostion() == 600) {
+				arrow.updateYPostition(540);
 			}
 		}
 		
 	}
-
-	public Image getLogo() {
-		return this.logo;
-	}
-
-	public Image getPlay() {
-		return this.play;
-	}
-
-	public Image getRules() {
-		return this.rules;
-	}
-
-	public Image getExit() {
-		return this.exit;
-	}
-
-	public Image getArrow() {
-		return this.arrow;
-	}
 	
-	public int getArrowY() {
-		return this.arrowY;
+	
+	public Map<String, SceneItem> getSceneItens() {
+		return sceneItens;
 	}
+
 
 }

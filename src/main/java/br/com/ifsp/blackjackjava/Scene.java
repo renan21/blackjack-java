@@ -259,7 +259,7 @@ public class Scene {
 				} else if (table.getPlayerScore() > table.getComScore()) {
 					table.setPlayerWin();
 					return;
-				} else {
+				} else if (table.getPlayerScore() == table.getComScore()){
 					table.setDraw();
 					return;
 				}
@@ -276,17 +276,17 @@ public class Scene {
 		if(table.getComSituation() == 3 || comScore >= 21) {
 			return false;
 		} else if(comScore == 15) {
-			return random.nextDouble() < 0.28; 
+			return random.nextDouble() < 0.95; 
 		} else if(comScore == 16) {
-			return random.nextDouble() < 0.38; 
+			return random.nextDouble() < 0.85; 
 		} else if(comScore == 17) {
-			return random.nextDouble() < 0.48; 
+			return random.nextDouble() < 0.75; 
 		} else if(comScore == 18) {
-			return random.nextDouble() < 0.68; 
+			return random.nextDouble() < 0.65; 
 		} else if(comScore == 19) {
-			return random.nextDouble() < 0.88; 
+			return random.nextDouble() < 0.55; 
 		} else if(comScore == 20) {
-			return random.nextDouble() < 0.99; 
+			return random.nextDouble() < 0.45; 
 		} else if(comScore == 21) {
 			return random.nextDouble() < 1.0; 
 		}

@@ -36,4 +36,5 @@ public class Probability {
         System.out.println("Verdadeiro: " + trueCount);
         System.out.println("Falso: " + falseCount);
     }
+    
 }

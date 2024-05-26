@@ -27,12 +27,16 @@ public class SceneItem {
 		return xPostion;
 	}
 	
-	public int getDefaultYPostion() {
+	public int getYPostion() {
 		return yPostion;
 	}
 
 	public void updateYPostition(int yPosition) {
 		this.yPostion = yPosition;
+	}
+
+	public void updateXPostition(int xPosition) {
+		this.xPostion = xPosition;		
 	}
 	
 }

@@ -16,7 +16,7 @@ import javax.swing.Timer;
 public class Scenario extends JPanel implements ActionListener {
 	
 	private Image background;
-	private MainMenu mainMenu;
+	private Scene scene;
 	private Timer timer;
 	
 	public Scenario() {
@@ -26,8 +26,8 @@ public class Scenario extends JPanel implements ActionListener {
 		ImageIcon imageIcon = new ImageIcon("src\\main\\resources\\images\\background.png");
 		this.background = imageIcon.getImage();
 		
-		mainMenu = new MainMenu();
-		mainMenu.loadSceneItens();
+		scene = new Scene();
+		scene.loadMainMenuSceneItens();
 		
 		addKeyListener(new KeyboardAdapter());
 		
@@ -40,8 +40,8 @@ public class Scenario extends JPanel implements ActionListener {
 	public void paint(Graphics graphics) {
 		Graphics2D graphics2d = (Graphics2D) graphics;
 		graphics2d.drawImage(background, 0, 0, this);
-		for(Entry<String, SceneItem> sceneIten : mainMenu.getSceneItens().entrySet()) {
-			graphics2d.drawImage(sceneIten.getValue().getImage(), sceneIten.getValue().getDefaultXPostion(), sceneIten.getValue().getDefaultYPostion(), this);
+		for(Entry<String, SceneItem> sceneItem : scene.getSceneItens().entrySet()) {
+			graphics2d.drawImage(sceneItem.getValue().getImage(), sceneItem.getValue().getDefaultXPostion(), sceneItem.getValue().getYPostion(), this);
 		}		
 		graphics.dispose();
 	}
@@ -51,11 +51,11 @@ public class Scenario extends JPanel implements ActionListener {
 		repaint();
 	}
 	
-	private class KeyboardAdapter extends KeyAdapter{
+	private class KeyboardAdapter extends KeyAdapter {
 		
 		@Override
 		public void keyPressed(KeyEvent e) {
-			mainMenu.keyPressed(e);
+			scene.keyPressed(e);
 		}
 		
 	}

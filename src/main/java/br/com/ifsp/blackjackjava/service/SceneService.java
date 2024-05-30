@@ -1,95 +1,31 @@
-package br.com.ifsp.blackjackjava;
+package br.com.ifsp.blackjackjava.service;
 
 import java.awt.event.KeyEvent;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-public class Scene {	
+import br.com.ifsp.blackjackjava.SceneItem;
+import br.com.ifsp.blackjackjava.Table;
+import br.com.ifsp.blackjackjava.scene.Scene;
+import br.com.ifsp.blackjackjava.scene.impl.MainMenuScene;
 
-	private Table table;
-	private Map<String, SceneItem> sceneItens;
+public class SceneService {	
+
+	private Table table;	
+	private Scene scene;
+	
+	
 	
 	private boolean spriteMainMenuActive = false;
 	private boolean spriteRuleActive = false;
 	
 	public void loadMainMenuSceneItens() {
-		
-		spriteMainMenuActive = true;
-		spriteRuleActive = false;
-		
-		sceneItens = new HashMap<String, SceneItem>();
-		sceneItens.put("logo", new SceneItem(300, 80, "src\\main\\resources\\images\\logo.png"));
-		sceneItens.put("play", new SceneItem(450, 540, "src\\main\\resources\\images\\play.png"));
-		sceneItens.put("rule", new SceneItem(442, 570, "src\\main\\resources\\images\\rule.png"));
-		sceneItens.put("exit", new SceneItem(452, 600, "src\\main\\resources\\images\\exit.png"));
-		sceneItens.put("arrow", new SceneItem(400, 540, "src\\main\\resources\\images\\arrow.png"));
+		this.scene = new MainMenuScene();
 	}
 	
 	public void loadGameSceneItens() {
-		
-		spriteMainMenuActive = false;
-		spriteRuleActive = false;
-		
-		sceneItens = new HashMap<String, SceneItem>();
-		sceneItens.put("back", new SceneItem(880, 650, "src\\main\\resources\\images\\back.png"));
-		
-		
-		if(table.getPlayerSituation() == 2) {
-			sceneItens.put("win", new SceneItem(200, 250, "src\\main\\resources\\images\\win.png"));
-			sceneItens.put("arrow", new SceneItem(840, 650, "src\\main\\resources\\images\\arrow.png"));
-		} else if (table.getPlayerSituation() == 1) {
-			sceneItens.put("loose", new SceneItem(200, 250, "src\\main\\resources\\images\\loose.png"));
-			sceneItens.put("arrow", new SceneItem(840, 650, "src\\main\\resources\\images\\arrow.png"));
-		} else if(table.isDraw()) {
-			sceneItens.put("draw", new SceneItem(200, 250, "src\\main\\resources\\images\\draw.png"));
-			sceneItens.put("arrow", new SceneItem(840, 650, "src\\main\\resources\\images\\arrow.png"));
-		} else {
-			sceneItens.put("continue", new SceneItem(800, 540, "src\\main\\resources\\images\\continue.png"));
-			sceneItens.put("stop", new SceneItem(800, 570, "src\\main\\resources\\images\\stop.png"));
-			sceneItens.put("arrow", new SceneItem(780, 540, "src\\main\\resources\\images\\arrow.png"));
-		}
-				
-		int counter = 0;
-		int cardPosition = 80;
-		for(Card comCard : table.getComCards()) {
-			if(table.getPlayerSituation() == 1 || table.getPlayerSituation() == 2 || table.isDraw()) {
-				sceneItens.put("playerCard" + counter, new SceneItem(cardPosition, 30, String.format("src\\main\\resources\\images\\cards\\%s-%s.png", comCard.getCardSuit(), comCard.getCardValue())));
-				String[] comScoreChars = split(table.getComScore() + "");
-				if(comScoreChars.length > 1) {
-					sceneItens.put("firstCharComScore", new SceneItem(810, 60, String.format("src\\main\\resources\\images\\numbers\\%s.png", comScoreChars[0])));
-					sceneItens.put("secondCharComScore", new SceneItem(850, 60, String.format("src\\main\\resources\\images\\numbers\\%s.png", comScoreChars[1])));
-				} else {
-					sceneItens.put("firstCharComScore", new SceneItem(830, 60, String.format("src\\main\\resources\\images\\numbers\\%s.png", comScoreChars[0])));
-				}
-				sceneItens.put("comScoreTitle", new SceneItem(800, 30, "src\\main\\resources\\images\\score.png"));
-			} else {
-				sceneItens.put("comCard" + counter, new SceneItem(cardPosition, 30, String.format("src\\main\\resources\\images\\back-card.png", comCard.getCardSuit(), comCard.getCardValue())));
-			}
 
-			counter++;
-			cardPosition = cardPosition + 140;
-		}
-		
-
-
-		String[] playerScoreChars = split(table.getPlayerScore() + "");
-		if(playerScoreChars.length > 1) {
-			sceneItens.put("firstCharPlayerScore", new SceneItem(810, 450, String.format("src\\main\\resources\\images\\numbers\\%s.png", playerScoreChars[0])));
-			sceneItens.put("secondCharPlayerScore", new SceneItem(850, 450, String.format("src\\main\\resources\\images\\numbers\\%s.png", playerScoreChars[1])));
-		} else {
-			sceneItens.put("firstCharPlayerScore", new SceneItem(830, 450, String.format("src\\main\\resources\\images\\numbers\\%s.png", playerScoreChars[0])));
-		}
-		sceneItens.put("playerScoreTitle", new SceneItem(800, 420, "src\\main\\resources\\images\\score.png"));
-
-		
-		counter = 0;
-		cardPosition = 80;
-		for(Card playerCard : table.getPlayerCards()) {
-			sceneItens.put("playerCard-" + counter, new SceneItem(cardPosition, 450, String.format("src\\main\\resources\\images\\cards\\%s-%s.png", playerCard.getCardSuit(), playerCard.getCardValue())));
-			counter++;
-			cardPosition = cardPosition + 140;
-		}
 	
 	}
 	

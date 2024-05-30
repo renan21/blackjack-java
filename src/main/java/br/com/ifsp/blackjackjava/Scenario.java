@@ -13,10 +13,12 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+import br.com.ifsp.blackjackjava.service.SceneService;
+
 public class Scenario extends JPanel implements ActionListener {
 	
 	private Image background;
-	private Scene scene;
+	private SceneService scene;
 	private Timer timer;
 	
 	public Scenario() {
@@ -26,7 +28,7 @@ public class Scenario extends JPanel implements ActionListener {
 		ImageIcon imageIcon = new ImageIcon("src\\main\\resources\\images\\background.png");
 		this.background = imageIcon.getImage();
 		
-		scene = new Scene();
+		scene = new SceneService();
 		scene.loadMainMenuSceneItens();
 		
 		addKeyListener(new KeyboardAdapter());

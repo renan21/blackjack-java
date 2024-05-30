@@ -9,13 +9,19 @@ public class SceneItem {
 	private Image image;
 	private int xPostion;	
 	private int yPostion;
+	
+	private final String extension = ".png";
+	private final String path = "src\\main\\resources\\images\\";
+	
 
 
-	public SceneItem(int defaultXPostion, int defaultYPostion, String imagePath) {
+	public SceneItem(int defaultXPostion, int defaultYPostion, String itemName) {
 		this.xPostion = defaultXPostion;
-		this.yPostion = defaultYPostion;		
+		this.yPostion = defaultYPostion;
 		
-		ImageIcon imageIcon = new ImageIcon(imagePath);
+		String finalName = path + itemName + extension;
+		
+		ImageIcon imageIcon = new ImageIcon(finalName);
 		this.image = imageIcon.getImage();
 	}
 		

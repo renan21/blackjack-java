@@ -18,7 +18,7 @@ import br.com.ifsp.blackjackjava.service.SceneService;
 public class Scenario extends JPanel implements ActionListener {
 	
 	private Image background;
-	private SceneService scene;
+	private SceneService sceneService;
 	private Timer timer;
 	
 	public Scenario() {
@@ -28,8 +28,8 @@ public class Scenario extends JPanel implements ActionListener {
 		ImageIcon imageIcon = new ImageIcon("src\\main\\resources\\images\\background.png");
 		this.background = imageIcon.getImage();
 		
-		scene = new SceneService();
-		scene.loadMainMenuSceneItens();
+		sceneService = new SceneService();
+		sceneService.loadMainMenuSceneItens();
 		
 		addKeyListener(new KeyboardAdapter());
 		
@@ -42,9 +42,10 @@ public class Scenario extends JPanel implements ActionListener {
 	public void paint(Graphics graphics) {
 		Graphics2D graphics2d = (Graphics2D) graphics;
 		graphics2d.drawImage(background, 0, 0, this);
-		for(Entry<String, SceneItem> sceneItem : scene.getSceneItens().entrySet()) {
-			graphics2d.drawImage(sceneItem.getValue().getImage(), sceneItem.getValue().getDefaultXPostion(), sceneItem.getValue().getYPostion(), this);
-		}		
+		for(Entry<String, SceneItem> sceneItem : sceneService.getSceneItens().entrySet()) {
+			graphics2d.drawImage(sceneItem.getValue().getImage(), sceneItem.getValue().getXPostion(), sceneItem.getValue().getYPostion(), this);			
+		}
+		
 		graphics.dispose();
 	}
 
@@ -57,9 +58,9 @@ public class Scenario extends JPanel implements ActionListener {
 		
 		@Override
 		public void keyPressed(KeyEvent e) {
-			scene.keyPressed(e);
+			sceneService.keyPressed(e);
 		}
 		
 	}
-
+	
 }

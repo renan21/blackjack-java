@@ -3,11 +3,9 @@ package br.com.ifsp.blackjackjava;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.ifsp.blackjackjava.enums.PlayerSituationEnum;
-
 public class Player {
 
-	private PlayerSituationEnum situation = PlayerSituationEnum.PLAYING;	
+
 	private List<Card> cards = new ArrayList<Card>();
 	
 	public void receiveCard(Card card) {
@@ -46,12 +44,6 @@ public class Player {
 		return scoreWithAce <= 21 ? scoreWithAce : score;
 	}
 	
-	public int getSituation() {
-		return situation.getSituation();
-	}
-	
-	public void setSituation(int situation) {		
-		this.situation = PlayerSituationEnum.valueOf(situation);
-	}
+
 		
 }

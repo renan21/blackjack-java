@@ -2,14 +2,17 @@ package br.com.ifsp.blackjackjava;
 
 import java.util.List;
 
+import br.com.ifsp.blackjackjava.enums.GameStatusEnum;
+
 public class Table {
 	
 	private Deck deck;
 	private Player player;		
 	private Player com;
-	private boolean draw = false;	
+	private GameStatusEnum status;	
 	
-	public void buildTable() {
+	public Table() {
+		this.status = GameStatusEnum.PLAYING;
 		this.deck = new Deck();
 		deck.shuffle();
 				
@@ -20,63 +23,40 @@ public class Table {
 			player.receiveCard(deck.deal());
 			com.receiveCard(deck.deal());
 		}
-		
 	}
 		
 	public List<Card> getPlayerCards() {
-		return player.getCards();
+		return this.player.getCards();
 	}
 
 	public List<Card> getComCards() {
-		return com.getCards();
+		return this.com.getCards();
 	}
 	
 	public int getPlayerScore() {
-		return player.getScore();
+		return this.player.getScore();
 	}
 
 	public int getComScore() {
-		return com.getScore();
+		return this.com.getScore();
 	}
 	
 	public void dealPlayer() {
-		player.receiveCard(deck.deal());
+		this.player.receiveCard(deck.deal());
 	}
 	
 	public void dealCom() {
-		com.receiveCard(deck.deal());
+		this.com.receiveCard(deck.deal());
 	}
 
-	public void setPlayerLoose() {
-		player.setSituation(1);		
+	public void setGameStatus(GameStatusEnum status) {
+		this.status = status;
 	}
 	
-	public void setPlayerWin() {
-		player.setSituation(2);		
+	public GameStatusEnum getGameStatus() {
+		return this.status;		
 	}
 
-	public void setComStop() {
-		com.setSituation(3);		
-	}
-	
-	public void setPlayerStop() {
-		player.setSituation(3);
-	}
-	
-	public int getPlayerSituation() {
-		return player.getSituation();
-	}
-	
-	public int getComSituation() {
-		return com.getSituation();
-	}
 
-	public void setDraw() {
-		draw = true;
-	}
-	
-	public boolean isDraw() {
-		return draw;
-	}
 	
 }

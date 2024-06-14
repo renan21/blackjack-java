@@ -29,7 +29,7 @@ public class SceneItem {
 		return image;
 	}
 	
-	public int getDefaultXPostion() {
+	public int getXPostion() {
 		return xPostion;
 	}
 	

@@ -91,23 +91,35 @@ public class GameSceneImpl extends Scene {
 
 	private void round() {
 		
-		if(shouldGiveAnotherCardToCom()) {
-			table.dealCom();
-		} else {
-			table.setGameStatus(GameStatusEnum.COM_STOPED);
-		}
+		while(table.getGameStatus() != GameStatusEnum.PLAYER_WON && table.getGameStatus() != GameStatusEnum.PLAYER_LOST && table.getGameStatus() != GameStatusEnum.DRAW){
 		
-		
-		if (table.getPlayerScore() == 21 && table.getComScore() == 21) {
-			table.setGameStatus(GameStatusEnum.DRAW);
-		}
-
-		if (table.getPlayerScore() == 21 || (table.getPlayerScore() < 21 && table.getComScore() > 21)) {
-			table.setGameStatus(GameStatusEnum.PLAYER_WON);
-		}
-
-		if (table.getComScore() == 21 || (table.getComScore() < 21 && table.getPlayerScore() > 21)) {
-			table.setGameStatus(GameStatusEnum.PLAYER_LOST);
+			if(shouldGiveAnotherCardToCom()) {
+				table.dealCom();
+			} else {
+				if(table.getGameStatus() == GameStatusEnum.PLAYER_STOPED) {
+					if(table.getPlayerScore() == table.getComScore()) {
+						table.setGameStatus(GameStatusEnum.DRAW);
+					} else if(table.getPlayerScore() > table.getComScore()) {
+						table.setGameStatus(GameStatusEnum.PLAYER_WON);
+					} else {
+						table.setGameStatus(GameStatusEnum.PLAYER_LOST);
+					}
+				}
+			}
+			
+			
+			if (table.getPlayerScore() == 21 && table.getComScore() == 21) {
+				table.setGameStatus(GameStatusEnum.DRAW);
+			}
+	
+			if (table.getPlayerScore() == 21 || (table.getPlayerScore() < 21 && table.getComScore() > 21)) {
+				table.setGameStatus(GameStatusEnum.PLAYER_WON);
+			}
+	
+			if (table.getComScore() == 21 || (table.getComScore() < 21 && table.getPlayerScore() > 21)) {
+				table.setGameStatus(GameStatusEnum.PLAYER_LOST);
+			}
+			
 		}
 		
 	}
@@ -116,6 +128,10 @@ public class GameSceneImpl extends Scene {
 		
 		int comScore = table.getComScore();		
 		Random random = new Random();
+		
+		if(table.getGameStatus() == GameStatusEnum.COM_STOPED) {
+			return false;
+		}
 		
 		if(comScore == 15) {
 			return random.nextDouble() < 0.95; 
@@ -173,8 +189,8 @@ public class GameSceneImpl extends Scene {
 		for (Card comCard : this.table.getComCards()) {
 			if (isPlayerLost(this.table.getGameStatus()) || isPlayerWon(this.table.getGameStatus()) || isGameDraw(this.table.getGameStatus())) {
 
-				String card = comCard.getCardSuit() + comCard.getCardValue();
-				this.sceneItens.put("com-card" + counter, buildSceneItem(cardPosition, 30, "cards\\" + card));
+
+				this.sceneItens.put("com-card" + counter, buildSceneItem(cardPosition, 30, "cards\\" + comCard.getCardName()));
 
 				String[] comScoreChars = split(this.table.getComScore() + "");
 				if (isScoreCharsLengthHigherThan(comScoreChars, 1)) {
@@ -199,7 +215,7 @@ public class GameSceneImpl extends Scene {
 			this.sceneItens.put("player-first-char-points",	buildSceneItem(810, 450, "numbers\\" + playerScoreChars[0]));
 			this.sceneItens.put("player-second-char-points", buildSceneItem(850, 450, "numbers\\" + playerScoreChars[1]));
 		} else {
-			this.sceneItens.put("player-first-char-points", buildSceneItem(830, 450, playerScoreChars[0]));
+			this.sceneItens.put("player-first-char-points", buildSceneItem(830, 450, "numbers\\" + playerScoreChars[0]));
 		}
 
 		this.sceneItens.put("score-player", buildSceneItem(800, 420, "score"));

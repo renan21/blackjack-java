@@ -10,7 +10,6 @@ public class SceneItem {
 	private int xPostion;	
 	private int yPostion;
 
-
 	public SceneItem(int defaultXPostion, int defaultYPostion, String imagePath) {
 		this.xPostion = defaultXPostion;
 		this.yPostion = defaultYPostion;

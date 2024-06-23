@@ -51,13 +51,10 @@ public class Scenario extends JPanel implements ActionListener {
 		repaint();
 	}
 	
-	private class KeyboardAdapter extends KeyAdapter {
-		
+	private class KeyboardAdapter extends KeyAdapter {		
 		@Override
 		public void keyPressed(KeyEvent e) {
 			scene.keyPressed(e);
-		}
-		
+		}		
 	}
-
 }

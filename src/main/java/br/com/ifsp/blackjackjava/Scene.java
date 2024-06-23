@@ -13,8 +13,7 @@ public class Scene {
 	private boolean spriteMainMenuActive = false;
 	private boolean spriteRuleActive = false;
 	
-	public void loadMainMenuSceneItens() {
-		
+	public void loadMainMenuSceneItens() {		
 		spriteMainMenuActive = true;
 		spriteRuleActive = false;
 		
@@ -71,8 +70,6 @@ public class Scene {
 			cardPosition = cardPosition + 140;
 		}
 		
-
-
 		String[] playerScoreChars = split(table.getPlayerScore() + "");
 		if(playerScoreChars.length > 1) {
 			sceneItens.put("firstCharPlayerScore", new SceneItem(810, 450, String.format("src\\main\\resources\\images\\numbers\\%s.png", playerScoreChars[0])));
@@ -81,7 +78,6 @@ public class Scene {
 			sceneItens.put("firstCharPlayerScore", new SceneItem(830, 450, String.format("src\\main\\resources\\images\\numbers\\%s.png", playerScoreChars[0])));
 		}
 		sceneItens.put("playerScoreTitle", new SceneItem(800, 420, "src\\main\\resources\\images\\score.png"));
-
 		
 		counter = 0;
 		cardPosition = 80;
@@ -90,7 +86,6 @@ public class Scene {
 			counter++;
 			cardPosition = cardPosition + 140;
 		}
-	
 	}
 	
 	public void loadRuleSceneItens() {
@@ -133,8 +128,7 @@ public class Scene {
 		}
 				
 		
-		if(keyCode == KeyEvent.VK_DOWN) {
-			
+		if(keyCode == KeyEvent.VK_DOWN) {			
 			if(!spriteRuleActive) {
 				if(arrow.getYPostion() == 540) {
 					if(spriteMainMenuActive) {
@@ -160,14 +154,12 @@ public class Scene {
 						arrow.updateXPostition(780);
 					}
 					
-					arrow.updateYPostition(540);
-					
-				} 
+					arrow.updateYPostition(540);	
+				}
 			}
 		}
 		
-		if(keyCode == KeyEvent.VK_ENTER) {
-			
+		if(keyCode == KeyEvent.VK_ENTER) {			
 			if(spriteMainMenuActive) {
 				if(arrow.getYPostion() == 540) {
 					//Play
@@ -199,8 +191,7 @@ public class Scene {
 					loadMainMenuSceneItens();
 				}
 			}
-		}
-		
+		}		
 	}
 	
 	
@@ -250,7 +241,6 @@ public class Scene {
 				
 				table.setComStop();
 			}			
-
 						
 			if(table.getComSituation() == 3 && table.getPlayerSituation() == 3) {
 				if(table.getComScore() > table.getPlayerScore()) {
@@ -264,15 +254,12 @@ public class Scene {
 					return;
 				}
 			}
-		}
-		
+		}		
 	}
 
-	private boolean shouldGiveAnotherCardToCom() {
-		
+	private boolean shouldGiveAnotherCardToCom() {		
 		int comScore = table.getComScore();		
-		Random random = new Random();
-		
+		Random random = new Random();		
 		if(table.getComSituation() == 3 || comScore >= 21) {
 			return false;
 		} else if(comScore == 15) {
@@ -290,7 +277,6 @@ public class Scene {
 		} else if(comScore == 21) {
 			return random.nextDouble() < 1.0; 
 		}
-		
 		return true;
 	}
 

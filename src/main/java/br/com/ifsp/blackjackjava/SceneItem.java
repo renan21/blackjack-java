@@ -13,8 +13,7 @@ public class SceneItem {
 
 	public SceneItem(int defaultXPostion, int defaultYPostion, String imagePath) {
 		this.xPostion = defaultXPostion;
-		this.yPostion = defaultYPostion;		
-		
+		this.yPostion = defaultYPostion;
 		ImageIcon imageIcon = new ImageIcon(imagePath);
 		this.image = imageIcon.getImage();
 	}
@@ -38,5 +37,4 @@ public class SceneItem {
 	public void updateXPostition(int xPosition) {
 		this.xPostion = xPosition;		
 	}
-	
 }

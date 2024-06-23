@@ -20,7 +20,6 @@ public class Table {
 			player.receiveCard(deck.deal());
 			com.receiveCard(deck.deal());
 		}
-		
 	}
 		
 	public List<Card> getPlayerCards() {

@@ -42,7 +42,6 @@ public class Player {
 			score = score + cardValue;
 		}
 		
-		
 		return scoreWithAce <= 21 ? scoreWithAce : score;
 	}
 	
@@ -53,5 +52,4 @@ public class Player {
 	public void setSituation(int situation) {		
 		this.situation = situation;
 	}
-		
 }

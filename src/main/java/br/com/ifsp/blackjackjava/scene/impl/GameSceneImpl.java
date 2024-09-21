@@ -8,166 +8,158 @@ import br.com.ifsp.blackjackjava.Card;
 import br.com.ifsp.blackjackjava.SceneItem;
 import br.com.ifsp.blackjackjava.Table;
 import br.com.ifsp.blackjackjava.enums.GameStatusEnum;
+import br.com.ifsp.blackjackjava.enums.ProbabilityEnum;
 import br.com.ifsp.blackjackjava.scene.Scene;
 
 public class GameSceneImpl extends Scene {
 
 	private Table table;
+	private Random random;
 
 	public GameSceneImpl() {
-		this.table = new Table();
+		table = new Table();
+		random = new Random();
 		updateSceneItens();
-	}
-	
-	private boolean isPlayerStoped(GameStatusEnum gameStatus) {
-		return GameStatusEnum.PLAYER_STOPED == gameStatus;
-	}
-
-	private boolean isPlayerLost(GameStatusEnum gameStatus) {
-		return GameStatusEnum.PLAYER_LOST == gameStatus;
-	}
-
-	private boolean isPlayerWon(GameStatusEnum playerSituation) {
-		return GameStatusEnum.PLAYER_WON == playerSituation;
-	}
-
-	private boolean isGameDraw(GameStatusEnum gameStatus) {
-		return GameStatusEnum.DRAW == gameStatus;
-	}
-
-	private String[] split(String score) {
-		return score.split("");
-	}
-
-	private boolean isScoreCharsLengthHigherThan(String[] array, int value) {
-		return array.length > value;
 	}
 
 	@Override
 	public Scene updateScene(int keyPressed) {
 
 		SceneItem arrow = this.sceneItens.get("arrow");
-
-		switch (keyPressed) {
-		case KeyEvent.VK_UP:
-			if (arrow.getYPostion() == 540) {
-				arrow.updateYPostition(650);
-				arrow.updateXPostition(850);
-			} else if (arrow.getYPostion() == 650) {
-				arrow.updateYPostition(570);
-				arrow.updateXPostition(780);
-			} else if (arrow.getYPostion() == 570) {
-				arrow.updateYPostition(540);
-			}
-			return this;
-		case KeyEvent.VK_DOWN:
-			if (arrow.getYPostion() == 540) {
-				arrow.updateYPostition(570);
-			} else if (arrow.getYPostion() == 570) {
-				arrow.updateYPostition(650);
-				arrow.updateXPostition(850);
-			} else if (arrow.getYPostion() == 650) {
-				arrow.updateYPostition(540);
-				arrow.updateXPostition(780);
-			}
-			return this;
-		case KeyEvent.VK_ENTER:
-			if (arrow.getYPostion() == 540) {
-				table.dealPlayer();
-			} else if (arrow.getYPostion() == 570) {
-				table.setGameStatus(GameStatusEnum.PLAYER_STOPED);
-			} else if (arrow.getYPostion() == 650) {
-				return new MainMenuSceneImpl();
-			}
-
-			round();
-			updateSceneItens();
-
-			return this;
-		default:
-			return this;
-		}
+		
+        if (keyPressed == KeyEvent.VK_UP
+        	&& table.getGameStatus() != GameStatusEnum.PLAYER_LOST 
+        	&& table.getGameStatus() != GameStatusEnum.PLAYER_WON) {
+        	return handleArrowUp(arrow);
+        } else if (keyPressed == KeyEvent.VK_DOWN 
+        			&& table.getGameStatus() != GameStatusEnum.PLAYER_LOST 
+        			&& table.getGameStatus() != GameStatusEnum.PLAYER_WON) {
+        	return handleArrowDown(arrow);
+        } else if (keyPressed == KeyEvent.VK_ENTER) {
+            return handleArrowEnter(arrow);
+        }
+        return this; 	
 	}
+	    
+    private Scene handleArrowUp(SceneItem arrow) {
+        switch (arrow.getYPosition()) {
+            case 540:
+            	updateArrowPosition(arrow, 850, 650);
+                return this;
+            case 650:
+            	updateArrowPosition(arrow, 780, 570);
+            	return this;
+            case 570:
+            	updateArrowPosition(arrow, 780, 540);
+            	return this;
+            default:
+            	return this;
+        }
+    }
 
-	private void round() {
-		
-		while(table.getGameStatus() != GameStatusEnum.PLAYER_WON && table.getGameStatus() != GameStatusEnum.PLAYER_LOST && table.getGameStatus() != GameStatusEnum.DRAW){
-		
+    private Scene handleArrowDown(SceneItem arrow) {
+        switch (arrow.getYPosition()) {
+            case 540:
+            	updateArrowPosition(arrow, 780, 570);
+            	return this;
+            case 570:
+            	updateArrowPosition(arrow, 850, 650);
+            	return this;
+            case 650:
+            	updateArrowPosition(arrow, 780, 540);
+            	return this;
+            default:
+            	return this;
+        }
+    }
+
+    private Scene handleArrowEnter(SceneItem arrow) {
+        switch (arrow.getYPosition()) {
+            case 540:
+                table.dealPlayer();
+                round();
+                updateSceneItens();
+                return this;
+            case 570:
+                table.setGameStatus(GameStatusEnum.PLAYER_STOPED);
+                round();
+                updateSceneItens();
+                return this;
+            case 650:
+            	return new MainMenuSceneImpl();
+            default:
+            	return this;
+        }
+    }
+    
+    private void updateArrowPosition(SceneItem arrow, int xPos, int yPos) {
+    	arrow.updateXPosition(xPos);
+    	arrow.updateYPosition(yPos);        
+    }
+
+	private void round() {	
+		while(isRoundOngoing()){
 			if(shouldGiveAnotherCardToCom()) {
 				table.dealCom();
 			} else {
-				if(table.getGameStatus() == GameStatusEnum.PLAYER_STOPED) {
-					if(table.getPlayerScore() == table.getComScore()) {
-						table.setGameStatus(GameStatusEnum.DRAW);
-					} else if(table.getPlayerScore() > table.getComScore()) {
-						table.setGameStatus(GameStatusEnum.PLAYER_WON);
-					} else {
-						table.setGameStatus(GameStatusEnum.PLAYER_LOST);
-					}
-				}
+				table.setGameStatus(GameStatusEnum.COM_STOPED);
 			}
-			
-			
-			if (table.getPlayerScore() == 21 && table.getComScore() == 21) {
-				table.setGameStatus(GameStatusEnum.DRAW);
-			}
-	
-			if (table.getPlayerScore() == 21 || (table.getPlayerScore() < 21 && table.getComScore() > 21)) {
-				table.setGameStatus(GameStatusEnum.PLAYER_WON);
-			}
-	
-			if (table.getComScore() == 21 || (table.getComScore() < 21 && table.getPlayerScore() > 21)) {
-				table.setGameStatus(GameStatusEnum.PLAYER_LOST);
-			}
-			
-		}
-		
+			isPlayerLost();
+			isPlayerWon();
+			isGameIsDraw();						
+		}	
 	}
 	
-	private boolean shouldGiveAnotherCardToCom() {
-		
-		int comScore = table.getComScore();		
-		Random random = new Random();
-		
-		if(table.getGameStatus() == GameStatusEnum.COM_STOPED) {
-			return false;
-		}
-		
-		if(comScore == 15) {
-			return random.nextDouble() < 0.95; 
-		} else if(comScore == 16) {
-			return random.nextDouble() < 0.85; 
-		} else if(comScore == 17) {
-			return random.nextDouble() < 0.75; 
-		} else if(comScore == 18) {
-			return random.nextDouble() < 0.65; 
-		} else if(comScore == 19) {
-			return random.nextDouble() < 0.55; 
-		} else if(comScore == 20) {
-			return random.nextDouble() < 0.45; 
-		} else if(comScore == 21) {
-			return random.nextDouble() < 1.0; 
-		}
-		
-		return true;
-	}
-	
-	private void updateSceneItens() {
-		this.sceneItens = new HashMap<String, SceneItem>();	
-
-		if (table.getPlayerScore() == 21 && table.getComScore() == 21) {
+    private void isGameIsDraw() {
+		if(table.getGameStatus() == GameStatusEnum.BOTH_STOPED
+				&& table.getPlayerScore() == table.getComScore() || (table.getPlayerScore() == 21 && table.getComScore() == 21)) {
 			table.setGameStatus(GameStatusEnum.DRAW);
 		}
-
+	}
+	
+	private void isPlayerWon() {
 		if (table.getPlayerScore() == 21) {
 			table.setGameStatus(GameStatusEnum.PLAYER_WON);
 		}
-
+		
+		if(table.getGameStatus() == GameStatusEnum.BOTH_STOPED
+				&& table.getPlayerScore() > table.getComScore()) {
+			table.setGameStatus(GameStatusEnum.PLAYER_WON);
+		}
+	}
+	
+	private void isPlayerLost() {
 		if (table.getComScore() == 21) {
 			table.setGameStatus(GameStatusEnum.PLAYER_LOST);
 		}
+	}
+	
+	private boolean isRoundOngoing() {
+        return table.getGameStatus() != GameStatusEnum.PLAYER_WON 
+            && table.getGameStatus() != GameStatusEnum.PLAYER_LOST 
+            && table.getGameStatus() != GameStatusEnum.COM_STOPED
+            && table.getGameStatus() != GameStatusEnum.DRAW;
+    }	
 		
-		if (isPlayerWon(this.table.getGameStatus())) {
+	private boolean shouldGiveAnotherCardToCom() {		
+		int comScore = table.getComScore();
+	    if (isComStopped(comScore)) {
+	        return false;
+	    }
+	    return calculateProbability(comScore);
+	}
+	
+	private boolean calculateProbability(int comScore) {
+        ProbabilityEnum probability = ProbabilityEnum.fromScore(comScore);
+        return random.nextDouble() < probability.getProbability();	
+	}
+	
+
+	
+	private void updateSceneItens() {
+		this.sceneItens = new HashMap<String, SceneItem>();	
+		
+		if (isPlayerWon(table.getGameStatus())) {
 			this.sceneItens.put("win", buildSceneItem(200, 250, "win"));
 			this.sceneItens.put("arrow", buildSceneItem(840, 650, "arrow"));
 		} else if (isPlayerLost(this.table.getGameStatus())) {
@@ -228,5 +220,32 @@ public class GameSceneImpl extends Scene {
 			counter++;
 		}
 	}
+	
+	private boolean isComStopped(int comScore) {
+	    return table.getGameStatus() == GameStatusEnum.COM_STOPED || comScore == 21;
+	}
+	
+	private boolean isPlayerStoped(GameStatusEnum gameStatus) {
+		return GameStatusEnum.PLAYER_STOPED == gameStatus;
+	}
 
+	private boolean isPlayerLost(GameStatusEnum gameStatus) {
+		return GameStatusEnum.PLAYER_LOST == gameStatus;
+	}
+
+	private boolean isPlayerWon(GameStatusEnum playerSituation) {
+		return GameStatusEnum.PLAYER_WON == playerSituation;
+	}
+
+	private boolean isGameDraw(GameStatusEnum gameStatus) {
+		return GameStatusEnum.DRAW == gameStatus;
+	}
+
+	private String[] split(String score) {
+		return score.split("");
+	}
+
+	private boolean isScoreCharsLengthHigherThan(String[] array, int value) {
+		return array.length > value;
+	}
 }

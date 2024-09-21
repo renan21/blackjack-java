@@ -38,7 +38,8 @@ public class Table {
 	}
 
 	public int getComScore() {
-		return this.com.getScore();
+		return 21;
+		//return this.com.getScore();
 	}
 	
 	public void dealPlayer() {
@@ -57,6 +58,4 @@ public class Table {
 		return this.status;		
 	}
 
-
-	
 }

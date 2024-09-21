@@ -20,7 +20,7 @@ public class Scenario extends JPanel implements ActionListener {
 	private Image background;
 	private SceneService sceneService;
 	private Timer timer;
-	
+
 	public Scenario() {
 		setFocusable(true);
 		setDoubleBuffered(true);
@@ -43,7 +43,7 @@ public class Scenario extends JPanel implements ActionListener {
 		Graphics2D graphics2d = (Graphics2D) graphics;
 		graphics2d.drawImage(background, 0, 0, this);
 		for(Entry<String, SceneItem> sceneItem : sceneService.getSceneItens().entrySet()) {
-			graphics2d.drawImage(sceneItem.getValue().getImage(), sceneItem.getValue().getXPostion(), sceneItem.getValue().getYPostion(), this);			
+			graphics2d.drawImage(sceneItem.getValue().getImage(), sceneItem.getValue().getXPosition(), sceneItem.getValue().getYPosition(), this);			
 		}
 		
 		graphics.dispose();

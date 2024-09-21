@@ -5,7 +5,6 @@ import java.util.List;
 
 public class Player {
 
-
 	private List<Card> cards = new ArrayList<Card>();
 	
 	public void receiveCard(Card card) {
@@ -43,7 +42,5 @@ public class Player {
 		
 		return scoreWithAce <= 21 ? scoreWithAce : score;
 	}
-	
-
 		
 }

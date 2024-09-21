@@ -13,8 +13,6 @@ public class SceneItem {
 	private final String extension = ".png";
 	private final String path = "src\\main\\resources\\images\\";
 	
-
-
 	public SceneItem(int defaultXPostion, int defaultYPostion, String itemName) {
 		this.xPostion = defaultXPostion;
 		this.yPostion = defaultYPostion;
@@ -29,19 +27,19 @@ public class SceneItem {
 		return image;
 	}
 	
-	public int getXPostion() {
+	public int getXPosition() {
 		return xPostion;
 	}
 	
-	public int getYPostion() {
+	public int getYPosition() {
 		return yPostion;
 	}
 
-	public void updateYPostition(int yPosition) {
+	public void updateYPosition(int yPosition) {
 		this.yPostion = yPosition;
 	}
 
-	public void updateXPostition(int xPosition) {
+	public void updateXPosition(int xPosition) {
 		this.xPostion = xPosition;		
 	}
 	

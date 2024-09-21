@@ -24,29 +24,29 @@ public class MainMenuSceneImpl extends Scene {
 		
 		switch(keyPressed) {
 			case KeyEvent.VK_UP:
-				if(arrow.getYPostion() == 540) {
-					arrow.updateYPostition(600);
-				} else if(arrow.getYPostion() == 600) {
-					arrow.updateYPostition(570);
-				} else if(arrow.getYPostion() == 570) {
-					arrow.updateYPostition(540);
+				if(arrow.getYPosition() == 540) {
+					arrow.updateYPosition(600);
+				} else if(arrow.getYPosition() == 600) {
+					arrow.updateYPosition(570);
+				} else if(arrow.getYPosition() == 570) {
+					arrow.updateYPosition(540);
 				}
 				return this;
 			case KeyEvent.VK_DOWN:
-				if(arrow.getYPostion() == 540) {
-					arrow.updateYPostition(570);
-				} else if(arrow.getYPostion() == 570) {
-					arrow.updateYPostition(600);
-				} else if(arrow.getYPostion() == 600) {
-					arrow.updateYPostition(540);
+				if(arrow.getYPosition() == 540) {
+					arrow.updateYPosition(570);
+				} else if(arrow.getYPosition() == 570) {
+					arrow.updateYPosition(600);
+				} else if(arrow.getYPosition() == 600) {
+					arrow.updateYPosition(540);
 				}
 				return this;
 			case KeyEvent.VK_ENTER:
-				if(arrow.getYPostion() == 540) {
+				if(arrow.getYPosition() == 540) {
 					return new GameSceneImpl();
-				} else if(arrow.getYPostion() == 570) {
+				} else if(arrow.getYPosition() == 570) {
 					return new RulesSceneImpl();
-				} else if(arrow.getYPostion() == 600) {
+				} else if(arrow.getYPosition() == 600) {
 					System.exit(0);
 				}
 			default:

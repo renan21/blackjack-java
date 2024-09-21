@@ -22,5 +22,4 @@ public class Card {
 	public String getCardName() {
 		return cardSuit + "-" + cardValue;
 	}
-	
 }

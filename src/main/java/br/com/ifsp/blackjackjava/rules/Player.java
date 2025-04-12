@@ -1,4 +1,4 @@
-package br.com.ifsp.blackjackjava;
+package br.com.ifsp.blackjackjava.rules;
 
 import java.util.ArrayList;
 import java.util.List;

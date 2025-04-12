@@ -3,8 +3,8 @@ package br.com.ifsp.blackjackjava.service;
 import java.awt.event.KeyEvent;
 import java.util.Map;
 
-import br.com.ifsp.blackjackjava.SceneItem;
 import br.com.ifsp.blackjackjava.scene.Scene;
+import br.com.ifsp.blackjackjava.scene.SceneItem;
 import br.com.ifsp.blackjackjava.scene.impl.MainMenuSceneImpl;
 
 public class SceneService {	

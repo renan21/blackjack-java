@@ -4,11 +4,11 @@ import java.awt.event.KeyEvent;
 import java.util.HashMap;
 import java.util.Random;
 
-import br.com.ifsp.blackjackjava.Card;
-import br.com.ifsp.blackjackjava.SceneItem;
-import br.com.ifsp.blackjackjava.Table;
 import br.com.ifsp.blackjackjava.enums.ProbabilityEnum;
+import br.com.ifsp.blackjackjava.rules.Card;
+import br.com.ifsp.blackjackjava.rules.Table;
 import br.com.ifsp.blackjackjava.scene.Scene;
+import br.com.ifsp.blackjackjava.scene.SceneItem;
 
 public class GameSceneImpl extends Scene {
 

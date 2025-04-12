@@ -1,4 +1,4 @@
-package br.com.ifsp.blackjackjava;
+package br.com.ifsp.blackjackjava.rules;
 
 import java.util.List;
 
@@ -61,7 +61,9 @@ public class Table {
 		} else if(com.getScore() > 21 && human.getScore() < 21) {
 			gameStatus = GameStatusEnum.HUMAN_WON;
 		} else if(human.getScore() > 21 && com.getScore() < 21) {
-			gameStatus = GameStatusEnum.HUMAN_LOST;
+			gameStatus = GameStatusEnum.HUMAN_LOST;			
+		} else if(human.getScore() > 21 && com.getScore() > 21) {
+			gameStatus = GameStatusEnum.DRAW;
 		} else if(isBothPlayersStoped()) {
 			if(com.getScore() > human.getScore()) {
 				gameStatus = GameStatusEnum.HUMAN_LOST;

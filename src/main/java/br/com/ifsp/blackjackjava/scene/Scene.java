@@ -2,8 +2,6 @@ package br.com.ifsp.blackjackjava.scene;
 
 import java.util.Map;
 
-import br.com.ifsp.blackjackjava.SceneItem;
-
 public abstract class Scene {
 	
 	protected Map<String, SceneItem> sceneItens;

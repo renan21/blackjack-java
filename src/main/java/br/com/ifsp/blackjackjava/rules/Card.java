@@ -1,4 +1,4 @@
-package br.com.ifsp.blackjackjava;
+package br.com.ifsp.blackjackjava.rules;
 
 public class Card {
 	

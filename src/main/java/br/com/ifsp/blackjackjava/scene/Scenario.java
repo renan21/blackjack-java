@@ -1,4 +1,4 @@
-package br.com.ifsp.blackjackjava;
+package br.com.ifsp.blackjackjava.scene;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -35,7 +35,6 @@ public class Scenario extends JPanel implements ActionListener {
 
 		this.timer = new Timer(5, this);
 		this.timer.start();
-
 	}
 
 	@Override
@@ -46,7 +45,6 @@ public class Scenario extends JPanel implements ActionListener {
 			graphics2d.drawImage(sceneItem.getValue().getImage(), sceneItem.getValue().getXPosition(),
 					sceneItem.getValue().getYPosition(), this);
 		}
-
 		graphics.dispose();
 	}
 
@@ -58,10 +56,8 @@ public class Scenario extends JPanel implements ActionListener {
 	private class KeyboardAdapter extends KeyAdapter {
 		@Override
 		public void keyPressed(KeyEvent e) {
-
 			sceneService.keyPressed(e);
 		}
-
 	}
 
 }

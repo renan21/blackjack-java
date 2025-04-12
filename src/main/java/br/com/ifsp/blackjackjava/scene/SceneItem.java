@@ -1,4 +1,4 @@
-package br.com.ifsp.blackjackjava;
+package br.com.ifsp.blackjackjava.scene;
 
 import java.awt.Image;
 

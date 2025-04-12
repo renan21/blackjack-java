@@ -7,7 +7,6 @@ import java.util.Random;
 import br.com.ifsp.blackjackjava.Card;
 import br.com.ifsp.blackjackjava.SceneItem;
 import br.com.ifsp.blackjackjava.Table;
-import br.com.ifsp.blackjackjava.enums.GameStatusEnum;
 import br.com.ifsp.blackjackjava.enums.ProbabilityEnum;
 import br.com.ifsp.blackjackjava.scene.Scene;
 
@@ -19,21 +18,18 @@ public class GameSceneImpl extends Scene {
 	public GameSceneImpl() {
 		table = new Table();
 		random = new Random();
-		updateSceneItens();
+		table.updateGameStatus();
+		updateSceneItens();		
 	}
-
+	
 	@Override
 	public Scene updateScene(int keyPressed) {
 
 		SceneItem arrow = this.sceneItens.get("arrow");
 		
-        if (keyPressed == KeyEvent.VK_UP
-        	&& table.getGameStatus() != GameStatusEnum.PLAYER_LOST 
-        	&& table.getGameStatus() != GameStatusEnum.PLAYER_WON) {
+        if (keyPressed == KeyEvent.VK_UP && !table.isHumanWon() && !table.isHumanLost() && !table.isGameDraw()) {
         	return handleArrowUp(arrow);
-        } else if (keyPressed == KeyEvent.VK_DOWN 
-        			&& table.getGameStatus() != GameStatusEnum.PLAYER_LOST 
-        			&& table.getGameStatus() != GameStatusEnum.PLAYER_WON) {
+        } else if (keyPressed == KeyEvent.VK_DOWN && !table.isHumanWon() && !table.isHumanLost() && !table.isGameDraw()) {
         	return handleArrowDown(arrow);
         } else if (keyPressed == KeyEvent.VK_ENTER) {
             return handleArrowEnter(arrow);
@@ -45,51 +41,49 @@ public class GameSceneImpl extends Scene {
         switch (arrow.getYPosition()) {
             case 540:
             	updateArrowPosition(arrow, 850, 650);
-                return this;
+            	break;
             case 650:
             	updateArrowPosition(arrow, 780, 570);
-            	return this;
+            	break;
             case 570:
             	updateArrowPosition(arrow, 780, 540);
-            	return this;
-            default:
-            	return this;
+            	break;
         }
+        table.updateGameStatus();
+        return this;
     }
 
     private Scene handleArrowDown(SceneItem arrow) {
         switch (arrow.getYPosition()) {
             case 540:
             	updateArrowPosition(arrow, 780, 570);
-            	return this;
+            	break;
             case 570:
             	updateArrowPosition(arrow, 850, 650);
-            	return this;
+            	break;
             case 650:
             	updateArrowPosition(arrow, 780, 540);
-            	return this;
-            default:
-            	return this;
+            	break;
         }
+        table.updateGameStatus();
+        return this;
     }
 
     private Scene handleArrowEnter(SceneItem arrow) {
         switch (arrow.getYPosition()) {
             case 540:
-                table.dealPlayer();
-                round();
-                updateSceneItens();
-                return this;
+                table.dealHuman();
+                break;
             case 570:
-                table.setGameStatus(GameStatusEnum.PLAYER_STOPED);
-                round();
-                updateSceneItens();
-                return this;
+                table.setHumanStop();
+                break;
             case 650:
             	return new MainMenuSceneImpl();
-            default:
-            	return this;
         }
+        round();
+        updateSceneItens();
+        table.updateGameStatus();
+        return this;
     }
     
     private void updateArrowPosition(SceneItem arrow, int xPos, int yPos) {
@@ -102,51 +96,21 @@ public class GameSceneImpl extends Scene {
 			if(shouldGiveAnotherCardToCom()) {
 				table.dealCom();
 			} else {
-				table.setGameStatus(GameStatusEnum.COM_STOPED);
+				table.setComStop();
 			}
-			isPlayerLost();
-			isPlayerWon();
-			isGameIsDraw();						
+			table.updateGameStatus();
 		}	
 	}
-	
-    private void isGameIsDraw() {
-		if(table.getGameStatus() == GameStatusEnum.BOTH_STOPED
-				&& table.getPlayerScore() == table.getComScore() || (table.getPlayerScore() == 21 && table.getComScore() == 21)) {
-			table.setGameStatus(GameStatusEnum.DRAW);
-		}
-	}
-	
-	private void isPlayerWon() {
-		if (table.getPlayerScore() == 21) {
-			table.setGameStatus(GameStatusEnum.PLAYER_WON);
-		}
 		
-		if(table.getGameStatus() == GameStatusEnum.BOTH_STOPED
-				&& table.getPlayerScore() > table.getComScore()) {
-			table.setGameStatus(GameStatusEnum.PLAYER_WON);
-		}
-	}
-	
-	private void isPlayerLost() {
-		if (table.getComScore() == 21) {
-			table.setGameStatus(GameStatusEnum.PLAYER_LOST);
-		}
-	}
-	
 	private boolean isRoundOngoing() {
-        return table.getGameStatus() != GameStatusEnum.PLAYER_WON 
-            && table.getGameStatus() != GameStatusEnum.PLAYER_LOST 
-            && table.getGameStatus() != GameStatusEnum.COM_STOPED
-            && table.getGameStatus() != GameStatusEnum.DRAW;
+        return !table.isHumanWon() 
+            && !table.isHumanLost()
+            && !table.isComStoped()
+            && !table.isGameDraw();
     }	
 		
-	private boolean shouldGiveAnotherCardToCom() {		
-		int comScore = table.getComScore();
-	    if (isComStopped(comScore)) {
-	        return false;
-	    }
-	    return calculateProbability(comScore);
+	private boolean shouldGiveAnotherCardToCom() {
+	    return calculateProbability(table.getComScore());
 	}
 	
 	private boolean calculateProbability(int comScore) {
@@ -159,13 +123,13 @@ public class GameSceneImpl extends Scene {
 	private void updateSceneItens() {
 		this.sceneItens = new HashMap<String, SceneItem>();	
 		
-		if (isPlayerWon(table.getGameStatus())) {
+		if (table.isHumanWon()) {
 			this.sceneItens.put("win", buildSceneItem(200, 250, "win"));
 			this.sceneItens.put("arrow", buildSceneItem(840, 650, "arrow"));
-		} else if (isPlayerLost(this.table.getGameStatus())) {
+		} else if (table.isHumanLost()) {
 			this.sceneItens.put("loose", buildSceneItem(200, 250, "loose"));
 			this.sceneItens.put("arrow", buildSceneItem(840, 650, "arrow"));
-		} else if (isPlayerStoped(this.table.getGameStatus())) {
+		} else if (table.isGameDraw()) {
 			this.sceneItens.put("draw", buildSceneItem(200, 250, "draw"));
 			this.sceneItens.put("arrow", buildSceneItem(840, 650, "arrow"));
 		} else {
@@ -179,7 +143,7 @@ public class GameSceneImpl extends Scene {
 		int counter = 1;
 		int cardPosition = 80;
 		for (Card comCard : this.table.getComCards()) {
-			if (isPlayerLost(this.table.getGameStatus()) || isPlayerWon(this.table.getGameStatus()) || isGameDraw(this.table.getGameStatus())) {
+			if (table.isHumanLost() || table.isHumanWon() || table.isGameDraw()) {
 
 
 				this.sceneItens.put("com-card" + counter, buildSceneItem(cardPosition, 30, "cards\\" + comCard.getCardName()));
@@ -202,7 +166,7 @@ public class GameSceneImpl extends Scene {
 			counter++;
 		}
 
-		String[] playerScoreChars = split(this.table.getPlayerScore() + "");
+		String[] playerScoreChars = split(this.table.getHumanScore() + "");
 		if (isScoreCharsLengthHigherThan(playerScoreChars, 1)) {
 			this.sceneItens.put("player-first-char-points",	buildSceneItem(810, 450, "numbers\\" + playerScoreChars[0]));
 			this.sceneItens.put("player-second-char-points", buildSceneItem(850, 450, "numbers\\" + playerScoreChars[1]));
@@ -214,33 +178,13 @@ public class GameSceneImpl extends Scene {
 
 		counter = 1;
 		cardPosition = 80;
-		for (Card playerCard : this.table.getPlayerCards()) {
+		for (Card playerCard : this.table.getHumanCards()) {
 			this.sceneItens.put("player-card" + counter, buildSceneItem(cardPosition, 450, "cards\\" + playerCard.getCardName()));
 			cardPosition = cardPosition + 140;
 			counter++;
 		}
 	}
 	
-	private boolean isComStopped(int comScore) {
-	    return table.getGameStatus() == GameStatusEnum.COM_STOPED || comScore == 21;
-	}
-	
-	private boolean isPlayerStoped(GameStatusEnum gameStatus) {
-		return GameStatusEnum.PLAYER_STOPED == gameStatus;
-	}
-
-	private boolean isPlayerLost(GameStatusEnum gameStatus) {
-		return GameStatusEnum.PLAYER_LOST == gameStatus;
-	}
-
-	private boolean isPlayerWon(GameStatusEnum playerSituation) {
-		return GameStatusEnum.PLAYER_WON == playerSituation;
-	}
-
-	private boolean isGameDraw(GameStatusEnum gameStatus) {
-		return GameStatusEnum.DRAW == gameStatus;
-	}
-
 	private String[] split(String score) {
 		return score.split("");
 	}

@@ -7,7 +7,8 @@ public enum ProbabilityEnum {
     SEVENTEEN(17, 0.75),
     EIGHTEEN(18, 0.65),
     NINETEEN(19, 0.55),
-    TWENTY(20, 0.45);
+    TWENTY(20, 0.45),
+    NONE(0, 0);
 
     private final int score;
     private final double probability;
@@ -26,6 +27,9 @@ public enum ProbabilityEnum {
     }
 
     public static ProbabilityEnum fromScore(int score) {
+    	if(score >= 21) {
+    		return NONE;
+    	}
         for (ProbabilityEnum probability : ProbabilityEnum.values()) {
             if (probability.getScore() == score) {
                 return probability;

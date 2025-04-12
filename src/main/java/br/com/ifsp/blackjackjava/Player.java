@@ -3,12 +3,16 @@ package br.com.ifsp.blackjackjava;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.ifsp.blackjackjava.enums.PlayerStatusEnum;
+
 public class Player {
-	// 1 - loose
-	// 2 - win
-	// 3 - stop
-	private int situation = 0;	
+
+	private PlayerStatusEnum playerStatus;
 	private List<Card> cards = new ArrayList<Card>();
+	
+	Player(){
+		playerStatus = PlayerStatusEnum.PLAYING;
+	}
 	
 	public void receiveCard(Card card) {
 		cards.add(card);
@@ -16,6 +20,14 @@ public class Player {
 	
 	public List<Card> getCards(){
 		return cards;
+	}
+	
+	public PlayerStatusEnum getPlayerStatus() {
+		return playerStatus;
+	}
+	
+	public void setPlayerStatus(PlayerStatusEnum playerStatus) {
+		this.playerStatus = playerStatus;		
 	}
 	
 	public int getScore() {
@@ -44,6 +56,7 @@ public class Player {
 		
 		return scoreWithAce <= 21 ? scoreWithAce : score;
 	}
+<<<<<<< HEAD
 	
 	public int getSituation() {
 		return situation;
@@ -53,3 +66,9 @@ public class Player {
 		this.situation = situation;
 	}
 }
+=======
+
+
+		
+}
+>>>>>>> release/refactoring

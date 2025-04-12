@@ -30,4 +30,8 @@ public class Deck { //TODO: Deixar essas classe estatica, não deixar ela ser in
 	public Card deal() {
 		return cards.remove(0);
 	}
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> release/refactoring

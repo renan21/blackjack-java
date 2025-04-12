@@ -18,4 +18,8 @@ public class Card {
 	public String getCardValue() {
 		return cardValue;
 	}
+	
+	public String getCardName() {
+		return cardSuit + "-" + cardValue;
+	}
 }

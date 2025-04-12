@@ -56,19 +56,6 @@ public class Player {
 		
 		return scoreWithAce <= 21 ? scoreWithAce : score;
 	}
-<<<<<<< HEAD
-	
-	public int getSituation() {
-		return situation;
-	}
-	
-	public void setSituation(int situation) {		
-		this.situation = situation;
-	}
-}
-=======
-
-
 		
 }
->>>>>>> release/refactoring
+

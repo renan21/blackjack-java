@@ -16,7 +16,7 @@ import javax.swing.Timer;
 import br.com.ifsp.blackjackjava.service.SceneService;
 
 public class Scenario extends JPanel implements ActionListener {
-	
+
 	private Image background;
 	private SceneService sceneService;
 	private Timer timer;
@@ -24,28 +24,29 @@ public class Scenario extends JPanel implements ActionListener {
 	public Scenario() {
 		setFocusable(true);
 		setDoubleBuffered(true);
-		
+
 		ImageIcon imageIcon = new ImageIcon("src\\main\\resources\\images\\background.png");
 		this.background = imageIcon.getImage();
-		
+
 		sceneService = new SceneService();
 		sceneService.loadMainMenuSceneItens();
-		
+
 		addKeyListener(new KeyboardAdapter());
-		
+
 		this.timer = new Timer(5, this);
 		this.timer.start();
 
 	}
-	
+
 	@Override
 	public void paint(Graphics graphics) {
 		Graphics2D graphics2d = (Graphics2D) graphics;
 		graphics2d.drawImage(background, 0, 0, this);
-		for(Entry<String, SceneItem> sceneItem : sceneService.getSceneItens().entrySet()) {
-			graphics2d.drawImage(sceneItem.getValue().getImage(), sceneItem.getValue().getXPosition(), sceneItem.getValue().getYPosition(), this);			
+		for (Entry<String, SceneItem> sceneItem : sceneService.getSceneItens().entrySet()) {
+			graphics2d.drawImage(sceneItem.getValue().getImage(), sceneItem.getValue().getXPosition(),
+					sceneItem.getValue().getYPosition(), this);
 		}
-		
+
 		graphics.dispose();
 	}
 
@@ -53,20 +54,14 @@ public class Scenario extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		repaint();
 	}
-	
-	private class KeyboardAdapter extends KeyAdapter {		
+
+	private class KeyboardAdapter extends KeyAdapter {
 		@Override
 		public void keyPressed(KeyEvent e) {
-<<<<<<< HEAD
-			scene.keyPressed(e);
-		}		
-	}
-}
-=======
+
 			sceneService.keyPressed(e);
 		}
-		
+
 	}
-	
+
 }
->>>>>>> release/refactoring

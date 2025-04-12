@@ -8,15 +8,7 @@ public class SceneItem {
 	
 	private Image image;
 	private int xPostion;	
-	private int yPostion;
-<<<<<<< HEAD
-
-	public SceneItem(int defaultXPostion, int defaultYPostion, String imagePath) {
-		this.xPostion = defaultXPostion;
-		this.yPostion = defaultYPostion;
-		ImageIcon imageIcon = new ImageIcon(imagePath);
-=======
-	
+	private int yPostion;	
 	private final String extension = ".png";
 	private final String path = "src\\main\\resources\\images\\";
 	
@@ -24,10 +16,8 @@ public class SceneItem {
 		this.xPostion = defaultXPostion;
 		this.yPostion = defaultYPostion;
 		
-		String finalName = path + itemName + extension;
-		
+		String finalName = path + itemName + extension;		
 		ImageIcon imageIcon = new ImageIcon(finalName);
->>>>>>> release/refactoring
 		this.image = imageIcon.getImage();
 	}
 		
@@ -50,9 +40,4 @@ public class SceneItem {
 	public void updateXPosition(int xPosition) {
 		this.xPostion = xPosition;		
 	}
-<<<<<<< HEAD
 }
-=======
-	
-}
->>>>>>> release/refactoring

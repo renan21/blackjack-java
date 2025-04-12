@@ -1,6 +1,6 @@
 # ♠️ Blackjack Java 🃏
 
-A simple **Blackjack (21)** game developed in **Java 17** using **Maven** as the dependency manager. The game is played against the computer (dealer).
+A simple **Blackjack (21)** game developed in **Java 17** using **Maven** as the dependency manager.
 
 ## 💻 Technologies Used
 
